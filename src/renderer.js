@@ -6,10 +6,3 @@ import App from './app.js';
 
 var installer = new App();
 installer._render();
-
-var ipcRenderer = require('electron').ipcRenderer;
-ipcRenderer.on('store-data', function (store) {
-	console.log( "setting progress: " +store );
-    installer.progress = store
-    installer._render();
-});

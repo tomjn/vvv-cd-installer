@@ -3,6 +3,7 @@ const electron = require('electron')
 const app = electron.app
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
+const exec = require('promised-exec');
 
 const path = require('path')
 const url = require('url')
@@ -13,6 +14,14 @@ let mainWindow
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function create_execution_step_func( mainWindow, index, steps, step ) {
+  return function( response ) {
+    mainWindow.webContents.send( 'progress', parseInt( ( index+1) / ( steps.length+1 )*100 ) );
+    mainWindow.webContents.send( 'progress-message', step.label );
+    return exec( step.exec );
+  }
 }
 
 function createWindow () {
@@ -27,35 +36,52 @@ function createWindow () {
   }))
   var i = 0;
   var steps = [
-    'Initialising',
-    'Installing Git',
-    'Installing VirtualBox',
-    'Installing Vagrant',
-    'Installing Vagrant Plugins',
-    'Copying VVV',
-    'Adding VVV Box',
-    'Starting VVV for the first time'
+    {
+      'label': 'Installing Git',
+      'exec': 'sleep 1'
+    },
+    {
+      'label': 'Installing VirtualBox',
+      'exec': 'sleep 1'
+    },
+    {
+      'label': 'Installing Vagrant',
+      'exec': 'sleep 1'
+    },
+    {
+      'label': 'Installing Vagrant Plugins',
+      'exec': 'sleep 1'
+    },
+    {
+      'label': 'Copying VVV',
+      'exec': 'babaung'
+    },
+    {
+      'label': 'Adding VVV Box',
+      'exec': 'sleep 1'
+    },
+    {
+      'label': 'Starting VVV for the first time',
+      'exec': 'sleep 1'
+    }
   ];
 
   mainWindow.webContents.send( 'progress', 0 );
   mainWindow.webContents.send( 'progress-message', "Initialising");
-  sleep( 3000 ).then( stuff );
-  
 
-  function stuff() {
-    if ( i < steps.length ) {
-      i++;
-      console.log( 'i is: ' + i )
-      mainWindow.webContents.send( 'progress', parseInt( (i/steps.length)*100 ) );
-      mainWindow.webContents.send( 'progress-message', steps[i]);
-    }
-    if ( i < steps.length ) {
-      sleep( 3000 ).then( stuff );
-    } else {
-      mainWindow.webContents.send( 'progress', 100 );
-      mainWindow.webContents.send( 'progress-message', 'Finished' );
-    }
+  var promise = exec( "sleep 1" );
+
+  for (var i = 0; i < steps.length; i++) {
+    var step = steps[i];
+    promise = promise.then( create_execution_step_func(mainWindow, i, steps, step ) )
   }
+  promise = promise.then( function() {
+    mainWindow.webContents.send( 'progress', 100 );
+    mainWindow.webContents.send( 'progress-message', "Complete");
+  }).fail( function(errorObject) {
+    mainWindow.webContents.send( 'progress-message', "Error! " + errorObject.string);
+  }).done();
+  
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()

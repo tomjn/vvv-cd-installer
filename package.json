@@ -1,0 +1,24 @@
+{
+  "name": "vvv-2-contributor-setup",
+  "version": "1.0.0",
+  "description": "Set up VVV2 for Contributor day via an electron app",
+  "main": "build/electron.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "babel src -d build",
+    "watch": "babel src -d build --watch",
+    "init": "babel src -d build"
+  },
+  "keywords": [],
+  "author": "Tom J Nowell",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "babel-preset-env": "^1.4.0",
+    "babel-preset-react": "^6.24.1",
+    "electron": "~1.6.2"
+  },
+  "dependencies": {
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
+  }
+}

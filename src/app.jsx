@@ -9,6 +9,7 @@ class App {
 	constructor() {
 		this.progress = 0;
 		this.message = 'Initialising';
+		this.current_screen = 'installsteps';
 		//this._store = createStore();
 		console.log('beginning listening');
 		ipcRenderer.on('progress',
@@ -34,8 +35,10 @@ class App {
 	_render() {
 		//{this._store.getState()}progress={this.progress} />,
 		render(
-	  	<InstallSteps progress={this.progress} message={this.message} />,
-		  document.getElementById('root')
+			<div className={ "app-container current-screen-" + this.current_screen }>
+			  	<InstallSteps progress={this.progress} message={this.message} />
+			</div>,
+			document.getElementById('root')
 		);
 	}
 }

@@ -1,5 +1,6 @@
 {
   "name": "vvv-2-contributor-setup",
+  "productName": "VVV Contributor Day Setup",
   "version": "1.0.0",
   "description": "Set up VVV2 for Contributor day via an electron app",
   "main": "build/electron.js",

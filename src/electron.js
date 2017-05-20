@@ -37,14 +37,6 @@ function createWindow () {
   var i = 0;
   var steps = [
     {
-      'label': 'Mounting Git disk',
-      'exec': "if ! hash git 2>/dev/null; then hdiutil attach MacOS/git.dmg; fi"
-    },
-    {
-      'label': 'Installing Git',
-      'exec': 'if ! hash git 2>/dev/null; then open -W "$(find "$(find /Volumes -maxdepth 1 -type d -name 'Git*' -print -quit)" -maxdepth 1 -type f -name 'git*' -print -quit)"; fi' // ls "$(find /Volumes -maxdepth 1 -type d -name 'Git*' -print -quit)"
-    },
-    {
       'label': 'Mounting VirtualBox disk',
       'exec': "if ! hash vbox-img 2>/dev/null; then hdiutil attach MacOS/virtualbox.dmg; fi"
     },

@@ -70,15 +70,15 @@ function createWindow () {
     },
     {
       'label': 'Extracting VVV archive',
-      'exec': 'sleep 1'
+      'exec': 'unzip vvv.zip'
     },
     {
       'label': 'Adding VVV Box',
-      'exec': 'sleep 1'
+      'exec': 'vagrant box add ubuntu/trusty64 vvv-contribute.box'
     },
     {
       'label': 'Starting VVV for the first time',
-      'exec': 'sleep 1' //vagrant up
+      'exec': 'vagrant up --provider virtualbox'
     }
   ];
 

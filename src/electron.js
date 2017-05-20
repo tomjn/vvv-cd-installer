@@ -35,43 +35,59 @@ function createWindow () {
     slashes: true
   }))
   var i = 0;
-  var steps = [
-    {
-      'label': 'Mounting VirtualBox disk',
-      'exec': "if ! hash vbox-img 2>/dev/null; then hdiutil attach MacOS/virtualbox.dmg; fi"
-    },
-    {
-      'label': 'Installing VirtualBox',
-      'exec': 'if ! hash vbox-img 2>/dev/null; then open -W /Volumes/VirtualBox/VirtualBox.pkg; fi'
-    },
-    {
-      'label': 'Mounting Vagrant disk',
-      'exec': "if ! hash vagrant 2>/dev/null; then hdiutil attach MacOS/vagrant.dmg; fi"
-    },
-    {
-      'label': 'Installing Vagrant',
-      'exec': 'if ! hash vagrant 2>/dev/null; then open -W /Volumes/Vagrant/vagrant.pkg; fi'
-    },
-    {
-      'label': 'Installing Vagrant Hosts Updater Plugin',
-      'exec': 'vagrant plugin install vagrant-hostsupdater'
-    },
-    {
-      'label': 'Installing Vagrant Triggers Plugin',
-      'exec': 'vagrant plugin install vagrant-triggers'
-    },
-    {
-      'label': 'Extracting VVV archive',
-      'exec': 'unzip vvv.zip'
-    },
-    {
-      'label': 'Adding VVV Box',
-      'exec': 'vagrant box add ubuntu/trusty64 vvv-contribute.box'
-    },
-    {
-      'label': 'Starting VVV for the first time',
-      'exec': 'vagrant up --provider virtualbox'
-    }
+  var steps = {
+    "darwin": [
+      {
+        'label': 'Mounting VirtualBox disk',
+        'exec': "if ! hash vbox-img 2>/dev/null; then hdiutil attach MacOS/virtualbox.dmg; fi"
+      },
+      {
+        'label': 'Installing VirtualBox',
+        'exec': 'if ! hash vbox-img 2>/dev/null; then open -W /Volumes/VirtualBox/VirtualBox.pkg; fi'
+      },
+      {
+        'label': 'Mounting Vagrant disk',
+        'exec': "if ! hash vagrant 2>/dev/null; then hdiutil attach MacOS/vagrant.dmg; fi"
+      },
+      {
+        'label': 'Installing Vagrant',
+        'exec': 'if ! hash vagrant 2>/dev/null; then open -W /Volumes/Vagrant/vagrant.pkg; fi'
+      },
+      {
+        'label': 'Updating Vagrant Plugins',
+        'exec': 'vagrant plugin update'
+      },
+      {
+        'label': 'Installing Vagrant Hosts Updater Plugin',
+        'exec': 'vagrant plugin install vagrant-hostsupdater'
+      },
+      {
+        'label': 'Installing Vagrant Triggers Plugin',
+        'exec': 'vagrant plugin install vagrant-triggers'
+      },
+      {
+        'label': 'Extracting VVV archive',
+        'exec': 'unzip vvv.zip'
+      },
+      {
+        'label': 'Adding VVV Box',
+        'exec': 'vagrant box add ubuntu/trusty64 vvv-contribute.box'
+      },
+      {
+        'label': 'Starting VVV for the first time',
+        'exec': 'vagrant up --provider virtualbox'
+      }
+    ],
+    "win32": [
+      {
+        'label': 'Step 1',
+        'exec': 'timeout /t 10 /nobreak > NUL'
+      },
+      {
+        'label': 'Step 2',
+        'exec': 'timeout /t 10 /nobreak > NUL'
+      }
+    ]
   ];
 
   mainWindow.webContents.send( 'progress', 0 );
@@ -79,9 +95,13 @@ function createWindow () {
 
   var promise = exec( "sleep 1" );
 
-  for (var i = 0; i < steps.length; i++) {
-    var step = steps[i];
-    promise = promise.then( create_execution_step_func(mainWindow, i, steps, step ) )
+  var platform = process.platform;
+
+
+
+  for (var i = 0; i < steps[platform].length; i++) {
+    var step = steps[platform][i];
+    promise = promise.then( create_execution_step_func(mainWindow, i, steps[platform], step ) )
   }
   promise = promise.then( function() {
     mainWindow.webContents.send( 'progress', 100 );

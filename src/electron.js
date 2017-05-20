@@ -80,12 +80,40 @@ function createWindow () {
     ],
     "win32": [
       {
-        'label': 'Step 1',
-        'exec': 'timeout /t 10 /nobreak > NUL'
+        'label': 'Installing Git',
+        'exec': 'Windows/Git-64bit.exe'
       },
       {
-        'label': 'Step 2',
-        'exec': 'timeout /t 10 /nobreak > NUL'
+        'label': 'Installing VirtualBox',
+        'exec': 'VirtualBox.exe'
+      },
+      {
+        'label': 'Installing Vagrant',
+        'exec': 'Windows/Vagrant.msi'
+      },
+      {
+        'label': 'Updating Vagrant Plugins',
+        'exec': 'vagrant plugin update'
+      },
+      {
+        'label': 'Installing Vagrant Hosts Updater Plugin',
+        'exec': 'vagrant plugin install vagrant-hostsupdater'
+      },
+      {
+        'label': 'Installing Vagrant Triggers Plugin',
+        'exec': 'vagrant plugin install vagrant-triggers'
+      },
+      {
+        'label': 'Adding VVV Box',
+        'exec': 'vagrant box add ubuntu/trusty64 vvv-contribute.box'
+      },
+      {
+        'label': 'Extracting VVV archive',
+        'exec': 'timeout /t 10 /nobreak > nul'
+      },
+      {
+        'label': 'Starting VVV for the first time',
+        'exec': 'vagrant up --provider virtualbox'
       }
     ]
   ];

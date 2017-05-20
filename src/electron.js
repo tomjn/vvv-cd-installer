@@ -42,7 +42,7 @@ function createWindow () {
     },
     {
       'label': 'Installing Git',
-      'exec': 'sleep 1'
+      'exec': 'if ! hash git 2>/dev/null; then open -W "$(find "$(find /Volumes -maxdepth 1 -type d -name 'Git*' -print -quit)" -maxdepth 1 -type f -name 'git*' -print -quit)"; fi' // ls "$(find /Volumes -maxdepth 1 -type d -name 'Git*' -print -quit)"
     },
     {
       'label': 'Mounting VirtualBox disk',
@@ -50,7 +50,7 @@ function createWindow () {
     },
     {
       'label': 'Installing VirtualBox',
-      'exec': 'sleep 1'
+      'exec': 'if ! hash vbox-img 2>/dev/null; then open -W /Volumes/VirtualBox/VirtualBox.pkg; fi'
     },
     {
       'label': 'Mounting Vagrant disk',
@@ -58,7 +58,7 @@ function createWindow () {
     },
     {
       'label': 'Installing Vagrant',
-      'exec': 'sleep 1'
+      'exec': 'if ! hash vagrant 2>/dev/null; then open -W /Volumes/Vagrant/vagrant.pkg; fi'
     },
     {
       'label': 'Installing Vagrant Hosts Updater Plugin',
@@ -78,7 +78,7 @@ function createWindow () {
     },
     {
       'label': 'Starting VVV for the first time',
-      'exec': 'vagrant up'
+      'exec': 'sleep 1' //vagrant up
     }
   ];
 

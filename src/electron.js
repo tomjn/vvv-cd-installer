@@ -37,24 +37,40 @@ function createWindow () {
   var i = 0;
   var steps = [
     {
+      'label': 'Mounting Git disk',
+      'exec': "if ! hash git 2>/dev/null; then hdiutil attach MacOS/git.dmg; fi"
+    },
+    {
       'label': 'Installing Git',
       'exec': 'sleep 1'
+    },
+    {
+      'label': 'Mounting VirtualBox disk',
+      'exec': "if ! hash vbox-img 2>/dev/null; then hdiutil attach MacOS/virtualbox.dmg; fi"
     },
     {
       'label': 'Installing VirtualBox',
       'exec': 'sleep 1'
     },
     {
+      'label': 'Mounting Vagrant disk',
+      'exec': "if ! hash vagrant 2>/dev/null; then hdiutil attach MacOS/vagrant.dmg; fi"
+    },
+    {
       'label': 'Installing Vagrant',
       'exec': 'sleep 1'
     },
     {
-      'label': 'Installing Vagrant Plugins',
-      'exec': 'sleep 1'
+      'label': 'Installing Vagrant Hosts Updater Plugin',
+      'exec': 'vagrant plugin install vagrant-hostsupdater'
     },
     {
-      'label': 'Copying VVV',
-      'exec': 'babaung'
+      'label': 'Installing Vagrant Triggers Plugin',
+      'exec': 'vagrant plugin install vagrant-triggers'
+    },
+    {
+      'label': 'Extracting VVV archive',
+      'exec': 'sleep 1'
     },
     {
       'label': 'Adding VVV Box',
@@ -62,7 +78,7 @@ function createWindow () {
     },
     {
       'label': 'Starting VVV for the first time',
-      'exec': 'sleep 1'
+      'exec': 'vagrant up'
     }
   ];
 

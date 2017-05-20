@@ -81,11 +81,11 @@ function createWindow () {
     "win32": [
       {
         'label': 'Installing Git',
-        'exec': 'Windows/Git-64bit.exe'
+        'exec': 'IF NOT EXIST git Windows\\Git-64bit.exe'
       },
       {
         'label': 'Installing VirtualBox',
-        'exec': 'VirtualBox.exe'
+        'exec': 'IF NOT EXIST vbox-img Windows\\VirtualBox.exe'
       },
       {
         'label': 'Installing Vagrant',
@@ -116,7 +116,7 @@ function createWindow () {
         'exec': 'vagrant up --provider virtualbox'
       }
     ]
-  ];
+  };
 
   mainWindow.webContents.send( 'progress', 0 );
   mainWindow.webContents.send( 'progress-message', "Initialising");

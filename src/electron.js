@@ -4,9 +4,9 @@ const app = electron.app
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
 const exec = require('promised-exec');
-
-const path = require('path')
-const url = require('url')
+const unzip = require('unzip');
+const path = require('path');
+const url = require('url');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -21,6 +21,34 @@ function create_execution_step_func( mainWindow, index, steps, step ) {
     mainWindow.webContents.send( 'progress', parseInt( ( index+1) / ( steps.length+1 )*100 ) );
     mainWindow.webContents.send( 'progress-message', step.label );
     return exec( step.exec );
+  }
+}
+
+function create_unzip_step_func( mainWindow, index, steps, step ) {
+  return function( response ) {
+    mainWindow.webContents.send( 'progress', parseInt( ( index+1) / ( steps.length+1 )*100 ) );
+    mainWindow.webContents.send( 'progress-message', step.label );
+
+    var deferred = Q.defer();
+
+    var archive = path.join(__dirname, '../testData/compressed-standard/archive.zip');
+
+    fs.createReadStream('path/to/archive.zip').pipe(unzip.Extract({ path: 'output/path' }));
+
+    var readStream = fs.createReadStream(step.source);
+    var writeStream = fstream.Writer(step.target);
+
+    var unzipParser = unzip.Parse();
+    unzipParser.on('error', function(err) {
+      deferred.reject(new Error(err));
+    });
+    unzipParser.on('close', function() {
+      deferred.resolve();
+    });
+    readStream
+      .pipe(unzipParser)
+      .pipe(writeStream)
+    return deferred.promise;
   }
 }
 
@@ -39,80 +67,100 @@ function createWindow () {
     "darwin": [
       {
         'label': 'Mounting VirtualBox disk',
+        'type': 'exec',
         'exec': "if ! hash vbox-img 2>/dev/null; then hdiutil attach MacOS/virtualbox.dmg; fi"
       },
       {
         'label': 'Installing VirtualBox',
+        'type': 'exec',
         'exec': 'if ! hash vbox-img 2>/dev/null; then open -W /Volumes/VirtualBox/VirtualBox.pkg; fi'
       },
       {
         'label': 'Mounting Vagrant disk',
+        'type': 'exec',
         'exec': "if ! hash vagrant 2>/dev/null; then hdiutil attach MacOS/vagrant.dmg; fi"
       },
       {
         'label': 'Installing Vagrant',
+        'type': 'exec',
         'exec': 'if ! hash vagrant 2>/dev/null; then open -W /Volumes/Vagrant/vagrant.pkg; fi'
       },
       {
         'label': 'Updating Vagrant Plugins',
+        'type': 'exec',
         'exec': 'vagrant plugin update'
       },
       {
         'label': 'Installing Vagrant Hosts Updater Plugin',
+        'type': 'exec',
         'exec': 'vagrant plugin install vagrant-hostsupdater'
       },
       {
         'label': 'Installing Vagrant Triggers Plugin',
+        'type': 'exec',
         'exec': 'vagrant plugin install vagrant-triggers'
       },
       {
         'label': 'Extracting VVV archive',
+        'type': 'exec',
         'exec': 'unzip vvv.zip'
       },
       {
         'label': 'Adding VVV Box',
+        'type': 'exec',
         'exec': 'vagrant box add ubuntu/trusty64 vvv-contribute.box'
       },
       {
         'label': 'Starting VVV for the first time',
+        'type': 'exec',
         'exec': 'vagrant up --provider virtualbox'
       }
     ],
     "win32": [
       {
         'label': 'Installing Git',
+        'type': 'exec',
         'exec': 'IF NOT EXIST git Windows\\Git-64bit.exe'
       },
       {
         'label': 'Installing VirtualBox',
+        'type': 'exec',
         'exec': 'IF NOT EXIST vbox-img Windows\\VirtualBox.exe'
       },
       {
         'label': 'Installing Vagrant',
+        'type': 'exec',
         'exec': 'Windows/Vagrant.msi'
       },
       {
         'label': 'Updating Vagrant Plugins',
+        'type': 'exec',
         'exec': 'vagrant plugin update'
       },
       {
         'label': 'Installing Vagrant Hosts Updater Plugin',
+        'type': 'exec',
         'exec': 'vagrant plugin install vagrant-hostsupdater'
       },
       {
         'label': 'Installing Vagrant Triggers Plugin',
+        'type': 'exec',
         'exec': 'vagrant plugin install vagrant-triggers'
       },
       {
         'label': 'Adding VVV Box',
+        'type': 'exec',
         'exec': 'vagrant box add ubuntu/trusty64 vvv-contribute.box'
       },
       {
         'label': 'Extracting VVV archive',
-        'exec': 'timeout /t 10 /nobreak > nul'
+        'type': 'unzip',
+        'source': '..',
+        'target': '..'
       },
       {
         'label': 'Starting VVV for the first time',
+        'type': 'exec',
         'exec': 'vagrant up --provider virtualbox'
       }
     ]
@@ -122,14 +170,15 @@ function createWindow () {
   mainWindow.webContents.send( 'progress-message', "Initialising");
 
   var promise = exec( "sleep 1" );
-
   var platform = process.platform;
-
-
 
   for (var i = 0; i < steps[platform].length; i++) {
     var step = steps[platform][i];
-    promise = promise.then( create_execution_step_func(mainWindow, i, steps[platform], step ) )
+    if ( 'exec' == step.type ) {
+      promise = promise.then( create_execution_step_func(mainWindow, i, steps[platform], step ) );
+    } else if ( 'unzip' == step.type ) {
+      promise = promise.then( create_unzip_step_func(mainWindow, i, steps[platform], step ) );
+    }
   }
   promise = promise.then( function() {
     mainWindow.webContents.send( 'progress', 100 );

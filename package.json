@@ -22,6 +22,7 @@
   "dependencies": {
     "promised-exec": "^1.0.1",
     "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "unzip": "^0.1.11"
   }
 }

@@ -7,6 +7,9 @@ const exec = require('promised-exec');
 const unzip = require('unzip');
 const path = require('path');
 const url = require('url');
+const Q = require('Q');
+const fs = require('fs');
+const fstream = require('fstream');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -30,24 +33,20 @@ function create_unzip_step_func( mainWindow, index, steps, step ) {
     mainWindow.webContents.send( 'progress-message', step.label );
 
     var deferred = Q.defer();
-
-    var archive = path.join(__dirname, '../testData/compressed-standard/archive.zip');
-
-    fs.createReadStream('path/to/archive.zip').pipe(unzip.Extract({ path: 'output/path' }));
-
     var readStream = fs.createReadStream(step.source);
     var writeStream = fstream.Writer(step.target);
-
     var unzipParser = unzip.Parse();
+
     unzipParser.on('error', function(err) {
-      deferred.reject(new Error(err));
+      deferred.reject(new Error("error "));// + err
     });
     unzipParser.on('close', function() {
       deferred.resolve();
     });
     readStream
       .pipe(unzipParser)
-      .pipe(writeStream)
+      .pipe(writeStream);
+
     return deferred.promise;
   }
 }
@@ -102,8 +101,9 @@ function createWindow () {
       },
       {
         'label': 'Extracting VVV archive',
-        'type': 'exec',
-        'exec': 'unzip vvv.zip'
+        'type': 'unzip',
+        'source': 'vvv.zip',
+        'target': '.'
       },
       {
         'label': 'Adding VVV Box',
@@ -155,8 +155,8 @@ function createWindow () {
       {
         'label': 'Extracting VVV archive',
         'type': 'unzip',
-        'source': '..',
-        'target': '..'
+        'source': 'vvv.zip',
+        'target': '.'
       },
       {
         'label': 'Starting VVV for the first time',
@@ -184,6 +184,7 @@ function createWindow () {
     mainWindow.webContents.send( 'progress', 100 );
     mainWindow.webContents.send( 'progress-message', "Complete");
   }).fail( function(errorObject) {
+    console.log( errorObject );
     mainWindow.webContents.send( 'progress-message', "Error! " + errorObject.string);
   }).done();
   

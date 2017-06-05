@@ -53,7 +53,7 @@ function create_unzip_step_func( mainWindow, index, steps, step ) {
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600})
+  mainWindow = new BrowserWindow({width: 600, height: 600})
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
@@ -62,135 +62,30 @@ function createWindow () {
     slashes: true
   }))
   var i = 0;
-  var steps = {
-    "darwin": [
-      {
-        'label': 'Mounting VirtualBox disk',
-        'type': 'exec',
-        'exec': "if ! hash vbox-img 2>/dev/null; then hdiutil attach MacOS/virtualbox.dmg; fi"
-      },
-      {
-        'label': 'Installing VirtualBox',
-        'type': 'exec',
-        'exec': 'if ! hash vbox-img 2>/dev/null; then open -W /Volumes/VirtualBox/VirtualBox.pkg; fi'
-      },
-      {
-        'label': 'Mounting Vagrant disk',
-        'type': 'exec',
-        'exec': "if ! hash vagrant 2>/dev/null; then hdiutil attach MacOS/vagrant.dmg; fi"
-      },
-      {
-        'label': 'Installing Vagrant',
-        'type': 'exec',
-        'exec': 'if ! hash vagrant 2>/dev/null; then open -W /Volumes/Vagrant/vagrant.pkg; fi'
-      },
-      {
-        'label': 'Updating Vagrant Plugins',
-        'type': 'exec',
-        'exec': 'vagrant plugin update'
-      },
-      {
-        'label': 'Installing Vagrant Hosts Updater Plugin',
-        'type': 'exec',
-        'exec': 'vagrant plugin install vagrant-hostsupdater'
-      },
-      {
-        'label': 'Installing Vagrant Triggers Plugin',
-        'type': 'exec',
-        'exec': 'vagrant plugin install vagrant-triggers'
-      },
-      {
-        'label': 'Extracting VVV archive',
-        'type': 'unzip',
-        'source': 'vvv.zip',
-        'target': '.'
-      },
-      {
-        'label': 'Adding VVV Box',
-        'type': 'exec',
-        'exec': 'vagrant box add ubuntu/trusty64 vvv-contribute.box'
-      },
-      {
-        'label': 'Starting VVV for the first time',
-        'type': 'exec',
-        'exec': 'vagrant up --provider virtualbox'
-      }
-    ],
-    "win32": [
-      {
-        'label': 'Installing Git',
-        'type': 'exec',
-        'exec': 'IF NOT EXIST git Windows\\Git-64bit.exe'
-      },
-      {
-        'label': 'Installing VirtualBox',
-        'type': 'exec',
-        'exec': 'IF NOT EXIST vbox-img Windows\\VirtualBox.exe'
-      },
-      {
-        'label': 'Installing Vagrant',
-        'type': 'exec',
-        'exec': 'Windows/Vagrant.msi'
-      },
-      {
-        'label': 'Updating Vagrant Plugins',
-        'type': 'exec',
-        'exec': 'vagrant plugin update'
-      },
-      {
-        'label': 'Installing Vagrant Hosts Updater Plugin',
-        'type': 'exec',
-        'exec': 'vagrant plugin install vagrant-hostsupdater'
-      },
-      {
-        'label': 'Installing Vagrant Triggers Plugin',
-        'type': 'exec',
-        'exec': 'vagrant plugin install vagrant-triggers'
-      },
-      {
-        'label': 'Adding VVV Box',
-        'type': 'exec',
-        'exec': 'vagrant box add ubuntu/trusty64 vvv-contribute.box'
-      },
-      {
-        'label': 'Extracting VVV archive',
-        'type': 'unzip',
-        'source': 'vvv.zip',
-        'target': '.'
-      },
-      {
-        'label': 'Starting VVV for the first time',
-        'type': 'exec',
-        'exec': 'vagrant up --provider virtualbox'
-      }
-    ]
-  };
 
   mainWindow.webContents.send( 'progress', 0 );
   mainWindow.webContents.send( 'progress-message', "Initialising");
+  mainWindow.webContents.send( 'app-status', "installing");
 
   var promise = exec( "sleep 1" );
-  var platform = process.platform;
+  var steps = require( 'steps-'+process.platform );
 
-  for (var i = 0; i < steps[platform].length; i++) {
-    var step = steps[platform][i];
+  for (var i = 0; i < steps.length; i++) {
+    var step = steps[i];
     if ( 'exec' == step.type ) {
-      promise = promise.then( create_execution_step_func(mainWindow, i, steps[platform], step ) );
+      promise = promise.then( create_execution_step_func(mainWindow, i, steps, step ) );
     } else if ( 'unzip' == step.type ) {
-      promise = promise.then( create_unzip_step_func(mainWindow, i, steps[platform], step ) );
+      promise = promise.then( create_unzip_step_func(mainWindow, i, steps, step ) );
     }
   }
   promise = promise.then( function() {
     mainWindow.webContents.send( 'progress', 100 );
     mainWindow.webContents.send( 'progress-message', "Complete");
+    mainWindow.webContents.send( 'app-status', "ready");
   }).fail( function(errorObject) {
     console.log( errorObject );
     mainWindow.webContents.send( 'progress-message', "Error! " + errorObject.string);
   }).done();
-  
-
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {

@@ -13,6 +13,17 @@ a {
 #vvv_logo {
 	white-space: pre;
 }
+
+.container-installing,
+.container-success {
+  display:none;
+}
+
+.current-screen-installing > .container-installing,
+.current-screen-success > .container-success {
+  display: block;
+}
+
 strong { color: #eff1f5; }
 .v1 { color: rgb( 246, 60, 37 ); }
 .v2 { color: rgb( 130, 255, 27 ); }

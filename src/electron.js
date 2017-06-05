@@ -81,7 +81,7 @@ function createWindow () {
   promise = promise.then( function() {
     mainWindow.webContents.send( 'progress', 100 );
     mainWindow.webContents.send( 'progress-message', "Complete");
-    mainWindow.webContents.send( 'app-status', "ready");
+    mainWindow.webContents.send( 'app-status', "success");
   }).fail( function(errorObject) {
     console.log( errorObject );
     mainWindow.webContents.send( 'progress-message', "Error! " + errorObject.string);

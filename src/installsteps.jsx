@@ -8,7 +8,7 @@ class InstallSteps extends React.Component {
 	}
 	render() {
 		return (
-			<div className="todoListMain">
+			<div className="container-installing">
 				<div className="header">
 					<ProgressBar progress={this.props.progress} />
 					<ProgressStatus message={this.props.message} />

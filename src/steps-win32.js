@@ -1,4 +1,4 @@
-[
+var steps = [
   {
     "label": "Installing Git",
     "type": "exec",
@@ -45,4 +45,6 @@
     "type": "exec",
     "exec": "vagrant up --provider virtualbox"
   }
-]
+];
+
+module.exports = steps;

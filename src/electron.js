@@ -68,7 +68,7 @@ function createWindow () {
   mainWindow.webContents.send( 'app-status', "installing");
 
   var promise = exec( "sleep 1" );
-  var steps = require( 'steps-'+process.platform );
+  var steps = require( './steps-'+process.platform );
 
   for (var i = 0; i < steps.length; i++) {
     var step = steps[i];

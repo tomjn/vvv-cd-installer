@@ -96,7 +96,8 @@ function createWindow () {
     mainWindow.webContents.send( 'app-status', "success");
   }).fail( function(errorObject) {
     console.log( errorObject );
-    mainWindow.webContents.send( 'progress-message', "Error! " + errorObject.string);
+    mainWindow.webContents.send( 'app-status', "problem");
+    mainWindow.webContents.send( 'progress-error', "Error! " + errorObject.string);
   }).done();
 
   // Emitted when the window is closed.

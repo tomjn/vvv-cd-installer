@@ -16,7 +16,15 @@ const fstream = require('fstream');
 let mainWindow
 
 function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  var deferred;
+
+  deferred = Q.defer();
+
+  setTimeout( function() {
+    deferred.resolve();
+  } , ms );
+
+  return deferred.promise;
 }
 
 function create_execution_step_func( mainWindow, index, steps, step ) {
@@ -68,7 +76,7 @@ function createWindow () {
   mainWindow.webContents.send( 'app-status', "installing");
 
   // we need a promise to start off with, not sure this will work on Windows though
-  var promise = exec( "sleep 1" );
+  var promise = sleep(1000);//exec( "sleep 1" );
   var steps = require( './steps-'+process.platform );
 
   for (var i = 0; i < steps.length; i++) {

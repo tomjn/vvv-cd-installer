@@ -68,7 +68,21 @@ function createWindow () {
     pathname: path.join(__dirname, '../index.html'),
     protocol: 'file:',
     slashes: true
-  }))
+  }));
+
+  mainWindow.webContents.on('new-window', function(event, url){
+    event.preventDefault();
+    require('electron').shell.openExternal(url);
+  });
+
+  // Emitted when the window is closed.
+  mainWindow.on('closed', function () {
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+    mainWindow = null
+  });
+  
   var i = 0;
 
   mainWindow.webContents.send( 'progress', 0 );
@@ -99,14 +113,6 @@ function createWindow () {
     mainWindow.webContents.send( 'app-status', "problem");
     mainWindow.webContents.send( 'progress-error', "Error! " + errorObject.string);
   }).done();
-
-  // Emitted when the window is closed.
-  mainWindow.on('closed', function () {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    mainWindow = null
-  })
 }
 
 // This method will be called when Electron has finished
@@ -122,6 +128,7 @@ app.on('window-all-closed', function () {
     app.quit()
   //}
 })
+
 
 app.on('activate', function () {
   // On OS X it's common to re-create a window in the app when the

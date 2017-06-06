@@ -5,10 +5,12 @@ import { ipcRenderer } from 'electron';
 
 import InstallSteps from './installsteps';
 import Success from './success';
+import Problem from './problem';
 
 class App {
 	constructor() {
 		this.progress = 0;
+		this.error = '';
 		this.message = 'Initialising';
 		this.current_screen = 'installing';
 		//this._store = createStore();
@@ -22,6 +24,12 @@ class App {
 		ipcRenderer.on('progress-message',
 			function (event, store) {
 			    this.message = store;
+			    this._render();
+			}.bind( this )
+		);
+		ipcRenderer.on('progress-error',
+			function (event, store) {
+			    this.error = store;
 			    this._render();
 			}.bind( this )
 		);
@@ -45,6 +53,7 @@ class App {
 			<div className={ "app-container current-screen-" + this.current_screen }>
 			  	<InstallSteps progress={this.progress} message={this.message}/>
 			  	<Success />
+			  	<Problem />
 			</div>,
 			document.getElementById('root')
 		);

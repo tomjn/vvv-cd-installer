@@ -15,11 +15,6 @@ var steps = [
     "exec": "Windows/Vagrant.msi"
   },
   {
-    "label": "Updating Vagrant Plugins",
-    "type": "exec",
-    "exec": "vagrant plugin update"
-  },
-  {
     "label": "Installing Vagrant Hosts Updater Plugin",
     "type": "exec",
     "exec": "vagrant plugin install vagrant-hostsupdater"

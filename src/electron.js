@@ -67,6 +67,7 @@ function createWindow () {
   mainWindow.webContents.send( 'progress-message', "Initialising");
   mainWindow.webContents.send( 'app-status', "installing");
 
+  // we need a promise to start off with, not sure this will work on Windows though
   var promise = exec( "sleep 1" );
   var steps = require( './steps-'+process.platform );
 
@@ -75,7 +76,10 @@ function createWindow () {
     if ( 'exec' == step.type ) {
       promise = promise.then( create_execution_step_func(mainWindow, i, steps, step ) );
     } else if ( 'unzip' == step.type ) {
-      promise = promise.then( create_unzip_step_func(mainWindow, i, steps, step ) );
+      // if the file to test for exists then we don't need to unzip
+      if ( ! fs.existsSync( step.test ) ) {
+        promise = promise.then( create_unzip_step_func(mainWindow, i, steps, step ) );
+      }
     }
   }
   promise = promise.then( function() {

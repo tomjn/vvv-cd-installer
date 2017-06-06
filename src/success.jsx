@@ -12,7 +12,7 @@ class Success extends React.Component {
 					<path fill="#a3be8c" d="M288.5,486.5c-4.277,0-8.446-1.525-11.73-4.348l-63-54.139c-7.54-6.479-8.4-17.844-1.921-25.384  s17.844-8.4,25.383-1.921l47.574,40.88l78.718-118.078c5.513-8.27,16.688-10.507,24.961-4.992  c8.271,5.515,10.507,16.69,4.988,24.962l-90,135c-2.86,4.29-7.421,7.146-12.528,7.849C290.132,486.444,289.313,486.5,288.5,486.5z"/>
 				</svg>
 				<p>Yay! All done</p>
-				<p><a href="http://vvv.dev" className="button">Visit the VVV dashboard</a></p>
+				<p><a href="http://vvv.dev" target="_blank" className="button">Visit the VVV dashboard</a></p>
 			</div>
 		);
 	}

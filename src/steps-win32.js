@@ -2,17 +2,17 @@ var steps = [
   {
     "label": "Installing Git",
     "type": "exec",
-    "exec": "IF NOT EXIST git Windows\\Git-64bit.exe"
+    "exec": "IF NOT EXIST git Git-64bit.exe"
   },
   {
     "label": "Installing VirtualBox",
     "type": "exec",
-    "exec": "IF NOT EXIST vbox-img Windows\\VirtualBox.exe"
+    "exec": "IF NOT EXIST vbox-img VirtualBox.exe"
   },
   {
     "label": "Installing Vagrant",
     "type": "exec",
-    "exec": "Windows/Vagrant.msi"
+    "exec": "Vagrant.msi"
   },
   {
     "label": "Installing Vagrant Hosts Updater Plugin",
@@ -27,13 +27,13 @@ var steps = [
   {
     "label": "Adding VVV Box",
     "type": "exec",
-    "exec": "vagrant box add ubuntu/trusty64 vvv-contribute.box"
+    "exec": "vagrant box add ubuntu/trusty64 ..\\vvv-contribute.box"
   },
   {
     "label": "Extracting VVV archive",
     "type": "unzip",
-    "source": "vvv.zip",
-    "target": "."
+    "source": "..\\vvv.zip",
+    "target": ".."
   },
   {
     "label": "Starting VVV for the first time",

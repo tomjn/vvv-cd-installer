@@ -41,16 +41,18 @@ function create_unzip_step_func( mainWindow, index, steps, step ) {
     mainWindow.webContents.send( 'progress-message', step.label );
 
     var deferred = Q.defer();
-    var readStream = fs.createReadStream(step.source);
-    var writeStream = fstream.Writer(step.target);
+    
     var unzipParser = unzip.Parse();
 
     unzipParser.on('error', function(err) {
-      deferred.reject(new Error("error "));// + err
+      deferred.reject(new Error("error " + err ));
     });
     unzipParser.on('close', function() {
       deferred.resolve();
     });
+
+    var readStream = fs.createReadStream(step.source);
+    var writeStream = fstream.Writer(step.target);
     readStream
       .pipe(unzipParser)
       .pipe(writeStream);
@@ -61,7 +63,15 @@ function create_unzip_step_func( mainWindow, index, steps, step ) {
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 600, height: 600})
+  mainWindow = new BrowserWindow({
+    width: 600,
+    height: 450,
+    fullscreenable: false,
+    title: "VVV CD Edition",
+    backgroundColor: '#343d46',
+    titleBarStyle: 'hidden',
+    center: true
+  })
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
@@ -82,7 +92,7 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   });
-  
+
   var i = 0;
 
   mainWindow.webContents.send( 'progress', 0 );
@@ -100,7 +110,11 @@ function createWindow () {
     } else if ( 'unzip' == step.type ) {
       // if the file to test for exists then we don't need to unzip
       if ( ! fs.existsSync( step.test ) ) {
-        promise = promise.then( create_unzip_step_func(mainWindow, i, steps, step ) );
+        if ( fs.existsSync( step.source ) ) {
+          promise = promise.then( create_unzip_step_func(mainWindow, i, steps, step ) );
+        } else {
+          console.log( "Archive to be extracted '"+step.source +"' does not exist, skipping " );
+        }
       }
     }
   }

@@ -13,6 +13,7 @@ class Success extends React.Component {
 				</svg>
 				<p>Yay! All done</p>
 				<p><a href="http://vvv.dev" target="_blank" className="button">Visit the VVV dashboard</a></p>
+				<p><a href="https://varyingvagrantvagrants.org/docs/en-US/" target="_blank" >VVV documentation</a></p>
 			</div>
 		);
 	}

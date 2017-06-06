@@ -32,6 +32,7 @@ var steps = [
   {
     "label": "Extracting VVV archive",
     "type": "unzip",
+    "test": "vvv-config.yml",
     "source": "..\\vvv.zip",
     "target": ".."
   },

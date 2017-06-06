@@ -15,21 +15,30 @@ a {
 }
 
 .container-installing,
-.container-success {
+.container-success,
+.container-problem {
   display:none;
 }
 
 .current-screen-installing > .container-installing,
-.current-screen-success > .container-success {
+.current-screen-success > .container-success,
+.current-screen-problem > .container-problem {
   display: block;
 }
 
-.container-success {
+.container-success,
+.container-problem {
   text-align: center;
 }
 
+.container-problem svg,
 .container-success svg {
-  max-width:200px;
+  max-width: 200px;
+  max-height: 200px;
+}
+
+.container-problem {
+  color: #bf616a;
 }
 
 .button {

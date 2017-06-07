@@ -13,12 +13,22 @@ body {
 #top-header {
     font-size: 4px;
     font-weight: 900;
-    padding: 0.5rem 2rem;
+    padding: 0.5rem;
     padding-top:1rem;
     background: #343d46;
 }
 
-#root {
+#top-header:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+#top-header-status-icon {
+  margin-top:0.5rem;
+}
+
+.current-screen {
   padding: 2rem;
 }
 a {
@@ -28,6 +38,10 @@ a {
 
 #vvv_logo {
 	white-space: pre;
+  float:left;
+}
+#top-header-status-icon {
+  float:right;
 }
 
 .container-installing,
@@ -127,6 +141,16 @@ strong { color: #eff1f5; }
 .double-bounce2 {
   -webkit-animation-delay: -1.0s;
   animation-delay: -1.0s;
+}
+
+.status-problem .double-bounce1,
+.status-problem .double-bounce2 {
+  background-color: #bf616a;
+}
+
+.status-success .double-bounce1,
+.status-success .double-bounce2 {
+  background-color: #a3be8c;
 }
 
 @-webkit-keyframes sk-bounce {

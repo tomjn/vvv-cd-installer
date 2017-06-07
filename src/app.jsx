@@ -6,6 +6,7 @@ import { ipcRenderer } from 'electron';
 import InstallSteps from './installsteps';
 import Success from './success';
 import Problem from './problem';
+import Header from './header';
 
 class App {
 	constructor() {
@@ -50,10 +51,13 @@ class App {
 	_render() {
 		//{this._store.getState()}progress={this.progress} />,
 		render(
-			<div className={ "app-container current-screen-" + this.current_screen }>
-			  	<InstallSteps progress={this.progress} message={this.message}/>
-			  	<Success />
-			  	<Problem  progress={this.progress} message={this.message}/>
+			<div className="app-container">
+				<Header status={this.current_screen} />
+				<div className={ "current-screen current-screen-" + this.current_screen }>
+				  	<InstallSteps progress={this.progress} message={this.message}/>
+				  	<Success />
+				  	<Problem  progress={this.progress} message={this.message}/>
+				</div>
 			</div>,
 			document.getElementById('root')
 		);

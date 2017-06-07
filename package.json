@@ -9,7 +9,11 @@
     "build": "babel src -d build",
     "watch": "babel src -d build --watch",
     "init": "babel src -d build",
-    "package": "electron-packager . --all --overwrite --icon=icon.icns --output=dist"
+
+    "pack:osx": "electron-packager . $npm_package_productName --out=dist --platform=darwin --arch=x64 --icon=assets/icons.icns --overwrite ",
+    "pack:win32": "electron-packager . $npm_package_productName --out=dist --overwrite --platform=win32 --arch=ia32",
+    "pack:win64": "electron-packager . $npm_package_productName --out=dist --overwrite --platform=win32 --arch=x64 --icon=assets/vvv.png",
+    "pack": "npm run pack:osx && npm run pack:win32 && npm run pack:win64"
   },
   "keywords": [],
   "author": "Tom J Nowell",

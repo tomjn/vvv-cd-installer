@@ -56,7 +56,7 @@ class App {
 				<div className={ "current-screen current-screen-" + this.current_screen }>
 				  	<InstallSteps progress={this.progress} message={this.message}/>
 				  	<Success />
-				  	<Problem  progress={this.progress} message={this.message}/>
+				  	<Problem  progress={this.progress} message={this.message} error={this.error} />
 				</div>
 			</div>,
 			document.getElementById('root')

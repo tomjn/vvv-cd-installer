@@ -20,6 +20,7 @@ class Problem extends React.Component {
 				<p><strong>Put your hand up and ask for help!</strong></p>
 				<p>Setup failed during this step:</p>
 				<ProgressStatus message={this.props.message} />
+				<p>{this.props.error}</p>
 			</div>
 		);
 	}

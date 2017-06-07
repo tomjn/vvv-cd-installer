@@ -1,4 +1,5 @@
 import React from 'react';
+import ProgressStatus from './progressstatus';
 
 class Problem extends React.Component {
 	constructor(props) {
@@ -15,7 +16,10 @@ class Problem extends React.Component {
 	c-1.361-2.198-2.839-5.18-4.434-8.948c-2.178-5.163-3.694-10.675-4.55-16.535c-0.428-3.036-0.64-5.931-0.64-8.688
 	c0-10.326,1.807-19.519,5.423-27.577C35.952,17.896,40.735,10.221,48.008,0H55.301z"></path>
 				</svg>
-				<p>Oh Dear, something went wrong. Ask for help!</p>
+				<p>Oh Dear, something went wrong.</p>
+				<p><strong>Put your hand up and ask for help!</strong></p>
+				<p>Setup failed during this step:</p>
+				<ProgressStatus message={this.props.message} />
 			</div>
 		);
 	}

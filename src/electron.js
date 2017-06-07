@@ -65,7 +65,7 @@ function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 600,
-    height: 450,
+    height: 500,
     fullscreenable: false,
     title: "VVV CD Edition",
     backgroundColor: '#343d46',

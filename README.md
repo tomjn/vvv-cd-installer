@@ -21,7 +21,7 @@ npm run watch
 Grab `electron-packager` and run the following:
 
 ```
-npm run package
+npm run pack
 ```
 
 You will need Wine installed if you're not on Windows to generate Windows builds. Each build will be placed in a subfolder with the appropriate name.

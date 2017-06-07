@@ -39,7 +39,7 @@ var steps = [
   {
     "label": "Adding VVV Box",
     "type": "exec",
-    "exec": "/usr/local/bin/vagrant box add ubuntu/trusty64 vvv-contribute.box"
+    "exec": "/usr/local/bin/vagrant box add ubuntu/trusty64 vvv.box"
   },
   {
     "label": "Starting VVV for the first time",

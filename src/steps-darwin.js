@@ -22,12 +22,12 @@ var steps = [
   {
     "label": "Installing Vagrant Hosts Updater Plugin",
     "type": "exec",
-    "exec": "vagrant plugin install vagrant-hostsupdater"
+    "exec": "/usr/local/bin/vagrant plugin install vagrant-hostsupdater"
   },
   {
     "label": "Installing Vagrant Triggers Plugin",
     "type": "exec",
-    "exec": "vagrant plugin install vagrant-triggers"
+    "exec": "/usr/local/bin/vagrant plugin install vagrant-triggers"
   },
   {
     "label": "Extracting VVV archive",
@@ -39,12 +39,12 @@ var steps = [
   {
     "label": "Adding VVV Box",
     "type": "exec",
-    "exec": "vagrant box add ubuntu/trusty64 vvv-contribute.box"
+    "exec": "/usr/local/bin/vagrant box add ubuntu/trusty64 vvv-contribute.box"
   },
   {
     "label": "Starting VVV for the first time",
     "type": "exec",
-    "exec": "vagrant up --provider virtualbox"
+    "exec": "/usr/local/bin/vagrant up --provider virtualbox"
   }
 ];
 

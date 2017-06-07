@@ -27,7 +27,7 @@ var steps = [
   {
     "label": "Adding VVV Box",
     "type": "exec",
-    "exec": "vagrant box add ubuntu/trusty64 ..\\vvv-contribute.box"
+    "exec": "vagrant box add ubuntu/trusty64 ..\\vvv.box"
   },
   {
     "label": "Extracting VVV archive",

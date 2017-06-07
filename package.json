@@ -9,7 +9,7 @@
     "build": "babel src -d build",
     "watch": "babel src -d build --watch",
     "init": "babel src -d build",
-    "package": "electron-packager . --all"
+    "package": "electron-packager . --all --overwrite --icon=icon.icns --output=dist"
   },
   "keywords": [],
   "author": "Tom J Nowell",

@@ -1,10 +1,5 @@
 var steps = [
   {
-    "label": "Installing Git",
-    "type": "exec",
-    "exec": "IF NOT EXIST git Git-64bit.exe"
-  },
-  {
     "label": "Installing VirtualBox",
     "type": "exec",
     "exec": "IF NOT EXIST vbox-img VirtualBox.exe"

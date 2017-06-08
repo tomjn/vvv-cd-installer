@@ -1,3 +1,6 @@
+var path = require('path');
+var install_path = path.join(process.env.USERPROFILE, 'vagrant-local');
+
 var steps = [
   {
     "label": "Installing VirtualBox",
@@ -29,7 +32,7 @@ var steps = [
     "type": "unzip",
     "test": "vvv-config.yml",
     "source": "..\\vvv.zip",
-    "target": ".."
+    "target": install_path
   },
   {
     "label": "Starting VVV for the first time",

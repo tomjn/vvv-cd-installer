@@ -1,3 +1,5 @@
+var path = require('path');
+var install_path = path.join(process.env.HOME, 'vagrant-local');
 var steps = [
   {
     "label": "Mounting VirtualBox disk",
@@ -34,7 +36,7 @@ var steps = [
     "type": "unzip",
     "test": "vvv-config.yml",
     "source": "$NODECWDvvv.zip",
-    "target": "$NODECWD"
+    "target": install_path
   },
   {
     "label": "Adding VVV Box",

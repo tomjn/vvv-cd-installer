@@ -6,6 +6,10 @@
     <link rel="stylesheet" href="index.css">
   </head>
   <body>
+<script>
+require('devtron').install()
+require('remote').getCurrentWindow().toggleDevTools();
+</script>
 <!--<p> All of the Node.js APIs are available in this renderer process. 
 Using Node.js <script>document.write(process.versions.node)</script>,<br>
 Chromium <script>document.write(process.versions.chrome)</script>,<br>

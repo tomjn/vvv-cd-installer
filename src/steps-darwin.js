@@ -4,7 +4,7 @@ var steps = [
   {
     "label": "Mounting VirtualBox disk",
     "type": "exec",
-    "exec": "if [[ ! -f /usr/local/bin/vbox-img ]]; then hdiutil attach MacOS/virtualbox.dmg; fi"
+    "exec": "if [[ ! -f /usr/local/bin/vbox-img ]]; then hdiutil attach $NODECWDMacOS/virtualbox.dmg; fi"
   },
   {
     "label": "Installing VirtualBox",
@@ -14,7 +14,7 @@ var steps = [
   {
     "label": "Mounting Vagrant disk",
     "type": "exec",
-    "exec": "if [[ ! -f /usr/local/bin/vagrant ]]; then hdiutil attach MacOS/vagrant.dmg; fi"
+    "exec": "if [[ ! -f /usr/local/bin/vagrant ]]; then hdiutil attach $NODECWDMacOS/vagrant.dmg; fi"
   },
   {
     "label": "Installing Vagrant",

@@ -8,7 +8,7 @@ class Problem extends React.Component {
 	render() {
 		return (
 			<div className="container-problem">
-				<svg version="1.0" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 55.475 100" enable-background="new 0 0 55.475 100" >
+				<svg version="1.0" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 55.475 100"  >
 					<rect fill="#bf616a" y="22.815" width="12.191" height="11.407"></rect>
 					<rect fill="#bf616a" y="66.719" width="12.191" height="11.408"></rect>
 					<path fill="#bf616a" d="M55.301,0c-6.105,10.64-10.072,18.472-11.9,23.496c-2.761,7.639-4.143,16.466-4.143,26.478

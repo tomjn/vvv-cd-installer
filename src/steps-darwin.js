@@ -34,7 +34,7 @@ var steps = [
     "type": "unzip",
     "test": "vvv-config.yml",
     "source": "$NODECWDvvv.zip",
-    "target": ""
+    "target": "$NODECWD"
   },
   {
     "label": "Adding VVV Box",

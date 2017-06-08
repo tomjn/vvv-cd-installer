@@ -62,20 +62,20 @@ function create_unzip_step_func( mainWindow, index, steps, step ) {
     mainWindow.webContents.send( 'progress-message', step.label );
 
     var deferred = Q.defer();
-    
+    var source = step.source;
+    source = step.source.replace( "$NODECWD", app_path );
+    var target = step.target;
+    target = step.target.replace( "$NODECWD", app_path );    
     var unzipParser = unzip.Parse();
 
     unzipParser.on('error', function(err) {
-      deferred.reject(new Error("error " + err ));
+      deferred.reject( "error " + err + "\n for: "+ source + "\n to: "+ target);
     });
     unzipParser.on('close', function() {
       deferred.resolve();
     });
 
-    var source = step.source;
-    source = command.replace( "$NODECWD", app_path );
-    var target = step.target;
-    target = command.replace( "$NODECWD", app_path );
+
 
     var readStream = fs.createReadStream( source );
     var writeStream = fstream.Writer( target );
@@ -139,11 +139,11 @@ function createWindow () {
     } else if ( 'unzip' == step.type ) {
       // if the file to test for exists then we don't need to unzip
       if ( ! fs.existsSync( step.test ) ) {
-        if ( fs.existsSync( step.source ) ) {
+        //if ( fs.existsSync( step.source ) ) {
           promise = promise.then( create_unzip_step_func(mainWindow, i, steps, step ) );
-        } else {
+        /*} else {
           console.log( "Archive to be extracted '"+step.source +"' does not exist, skipping " );
-        }
+        }*/
       } else { 
         console.log( 'Test file already exists' );
       }

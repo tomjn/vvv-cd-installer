@@ -72,8 +72,13 @@ function create_unzip_step_func( mainWindow, index, steps, step ) {
       deferred.resolve();
     });
 
-    var readStream = fs.createReadStream(step.source);
-    var writeStream = fstream.Writer(step.target);
+    var source = step.source;
+    source = command.replace( "$NODECWD", app_path );
+    var target = step.target;
+    target = command.replace( "$NODECWD", app_path );
+
+    var readStream = fs.createReadStream( source );
+    var writeStream = fstream.Writer( target );
     readStream
       .pipe(unzipParser)
       .pipe(writeStream);

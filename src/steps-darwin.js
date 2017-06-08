@@ -33,13 +33,13 @@ var steps = [
     "label": "Extracting VVV archive",
     "type": "unzip",
     "test": "vvv-config.yml",
-    "source": "vvv.zip",
-    "target": "."
+    "source": "$NODECWDvvv.zip",
+    "target": ""
   },
   {
     "label": "Adding VVV Box",
     "type": "exec",
-    "exec": "/usr/local/bin/vagrant box add ubuntu/trusty64 $NODECWD/vvv.box"
+    "exec": "/usr/local/bin/vagrant box add ubuntu/trusty64 $NODECWDvvv.box"
   },
   {
     "label": "Starting VVV for the first time",

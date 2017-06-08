@@ -11,9 +11,28 @@ const Q = require('Q');
 const fs = require('fs');
 const fstream = require('fstream');
 
+/*var path = require("path");
+var absolutePath = path.resolve("vvv.box");
+var root = path.dirname(require.main.filename)
+console.log( "root: " + root +"\n" +
+ "execpath: " + app.execPath +"\n" +
+ "getapppath: " + app.getAppPath() +"\n" +
+ "getpath exe: " + app.getPath( 'exe' ) );*/
+
+
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
+
+function getAppRoot() {
+  if ( process.platform === 'win32' ) {
+    return path.join( app.getAppPath(), '/../../../' );
+  }  else {
+    return path.join( app.getAppPath(), '/../../../../' );
+  }
+}
+let app_path = getAppRoot();
 
 function sleep(ms) {
   var deferred;
@@ -31,7 +50,9 @@ function create_execution_step_func( mainWindow, index, steps, step ) {
   return function( response ) {
     mainWindow.webContents.send( 'progress', parseInt( ( index+1) / ( steps.length+1 )*100 ) );
     mainWindow.webContents.send( 'progress-message', step.label );
-    return exec( step.exec );
+    var command = step.exec;
+    command = command.replace( "$NODECWD", app_path );
+    return exec( command );
   }
 }
 
@@ -71,7 +92,7 @@ function createWindow () {
     backgroundColor: '#343d46',
     titleBarStyle: 'hidden',
     center: true
-  })
+  });
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
@@ -79,6 +100,7 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }));
+  mainWindow.webContents.openDevTools()
 
   mainWindow.webContents.on('new-window', function(event, url){
     event.preventDefault();
@@ -92,6 +114,8 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   });
+
+
 
   var i = 0;
 
@@ -115,6 +139,8 @@ function createWindow () {
         } else {
           console.log( "Archive to be extracted '"+step.source +"' does not exist, skipping " );
         }
+      } else { 
+        console.log( 'Test file already exists' );
       }
     }
   }
@@ -127,6 +153,11 @@ function createWindow () {
     mainWindow.webContents.send( 'app-status', "problem");
     mainWindow.webContents.send( 'progress-error', "Error! " + errorObject.string);
   }).done();
+
+  setTimeout( function () {
+    var message =  "approot: " + app_path;
+    mainWindow.webContents.send( 'log', message );
+  }, 1000);
 }
 
 // This method will be called when Electron has finished

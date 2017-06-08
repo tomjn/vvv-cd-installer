@@ -40,6 +40,11 @@ class App {
 			    this._render();
 			}.bind( this )
 		);
+		ipcRenderer.on('log',
+			function (event, store) {
+			    console.log( store );
+			}.bind( this )
+		);
 		/*ipcRenderer.on('progress',
 			function (event, store) {
 			    this.progress = store;

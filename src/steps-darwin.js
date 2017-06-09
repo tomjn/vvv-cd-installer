@@ -2,6 +2,11 @@ var path = require('path');
 var install_path = path.join(process.env.HOME, 'vagrant-local');
 var steps = [
   {
+    "label": "Creating VVV target folder",
+    "type": "exec",
+    "exec": "mkdir -p " + install_path
+  },
+  {
     "label": "Mounting VirtualBox disk",
     "type": "exec",
     "exec": "if [[ ! -f /usr/local/bin/vbox-img ]]; then hdiutil attach $NODECWDMacOS/virtualbox.dmg; fi"

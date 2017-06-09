@@ -3,6 +3,11 @@ var install_path = path.join(process.env.USERPROFILE, 'vagrant-local');
 
 var steps = [
   {
+    "label": "Creating VVV target folder",
+    "type": "exec",
+    "exec": "New-Item -ItemType Directory -Force -Path " + install_path
+  },
+  {
     "label": "Installing VirtualBox",
     "type": "exec",
     "exec": "IF NOT EXIST vbox-img VirtualBox.exe"

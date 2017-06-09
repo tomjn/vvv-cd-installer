@@ -4,7 +4,7 @@ const app = electron.app
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
 const exec = require('promised-exec');
-const unzip = require('unzip');
+const unzip = require('unzip2');
 const path = require('path');
 const url = require('url');
 const Q = require('Q');

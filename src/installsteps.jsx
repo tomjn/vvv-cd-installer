@@ -14,8 +14,8 @@ class InstallSteps extends React.Component {
 				<div className="header">
 					<ProgressBar progress={this.props.progress} />
 					<ProgressStatus message={this.props.message} />
-					<p>We're going to do some checks and install some things!</p>
-					<p>When done, VVV will be installed at {this.install_path}</p>
+					<p>We're going to do some checks and install some things! Some steps may require you to restart your machine</p>
+					<p>When done, VVV will be installed at:<br/><strong>{this.install_path}</strong></p>
 				</div>
 			</div>
 		);

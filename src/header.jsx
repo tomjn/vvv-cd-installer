@@ -15,6 +15,7 @@ class Header extends React.Component {
 <span className="v1">   \_/  </span><span className="v2">   \_/  </span><span className="v3">   \_/   </span> <span className="v4">|_____|</span><br/>
 
 </p>
+<p id="header-tagline">Contributor Day - <em>beta</em></p>
 				<div id="top-header-status-icon" className={ "status-"+this.props.status }>
 					<div className="spinner">
 					  <div className="double-bounce1"></div>

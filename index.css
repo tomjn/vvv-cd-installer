@@ -28,6 +28,13 @@ body {
   margin-top:0.5rem;
 }
 
+#header-tagline {
+  font-size: 14px;
+  font-weight: normal;
+  margin-left: 1rem;
+  float: left;
+  margin: 0.5rem 0.75rem;
+}
 .current-screen {
   padding: 2rem;
 }

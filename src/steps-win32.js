@@ -32,7 +32,7 @@ var steps = [
   {
     "label": "Adding VVV Box",
     "type": "exec",
-    "exec": "vagrant box list | findstr \"ubuntu/trusty64\" 1>nul || vagrant add box ubuntu/trusty64 ..\\vvv.box"
+    "exec": "vagrant box list | findstr \"ubuntu/trusty64\" 1>nul || vagrant box add ubuntu/trusty64 ..\\vvv.box"
   },
   {
     "label": "Starting VVV for the first time",

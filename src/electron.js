@@ -11,15 +11,6 @@ const Q = require('Q');
 const fs = require('fs');
 const fstream = require('fstream');
 
-/*var path = require("path");
-var absolutePath = path.resolve("vvv.box");
-var root = path.dirname(require.main.filename)
-console.log( "root: " + root +"\n" +
- "execpath: " + app.execPath +"\n" +
- "getapppath: " + app.getAppPath() +"\n" +
- "getpath exe: " + app.getPath( 'exe' ) );*/
-
-
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.

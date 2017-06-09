@@ -32,16 +32,16 @@ var steps = [
     "exec": "/usr/local/bin/vagrant plugin install vagrant-triggers"
   },
   {
-    "label": "Extracting VVV archive",
-    "type": "unzip",
-    "test": "vvv-config.yml",
-    "source": "$NODECWDvvv.zip",
-    "target": install_path
-  },
-  {
     "label": "Adding VVV Box",
     "type": "exec",
-    "exec": "/usr/local/bin/vagrant box add ubuntu/trusty64 $NODECWDvvv.box"
+    "exec": "if [[ ! /usr/local/bin/vagrant box list | grep -q ubuntu/trusty64 ]]; then /usr/local/bin/vagrant add box ubuntu/trusty64 $NODECWDvvv.box; fi"
+  },
+  {
+    "label": "Extracting VVV archive",
+    "type": "unzip",
+    "test": install_path +"vvv-config.yml",
+    "source": "$NODECWDvvv.zip",
+    "target": install_path
   },
   {
     "label": "Starting VVV for the first time",

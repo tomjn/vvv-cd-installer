@@ -18,7 +18,7 @@
   "author": "Tom J Nowell",
   "license": "GPL-3.0",
   "devDependencies": {
-    "babel-preset-env": "^1.4.0",
+    "babel-preset-env": "^1.5.2",
     "babel-preset-react": "^6.24.1",
     "devtron": "^1.4.0",
     "electron": "~1.6.2"

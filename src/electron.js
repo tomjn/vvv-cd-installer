@@ -70,6 +70,12 @@ function create_unzip_step_func( mainWindow, index, steps, step ) {
 
     var readStream = fs.createReadStream( source );
     var writeStream = fstream.Writer( target );
+    readStream.on('error', function(err) {
+      deferred.reject( "error " + err + "\n for: "+ source + "\n to: "+ target);
+    });
+    writeStream.on('error', function(err) {
+      deferred.reject( "error " + err + "\n for: "+ source + "\n to: "+ target);
+    });
     readStream
       .pipe(unzipParser)
       .pipe(writeStream);

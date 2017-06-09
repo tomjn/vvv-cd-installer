@@ -60,7 +60,7 @@ function create_unzip_step_func( mainWindow, index, steps, step ) {
     var unzipParser = unzip.Parse();
 
     unzipParser.on('error', function(err) {
-      deferred.reject( "error " + err + "\n for: "+ source + "\n to: "+ target);
+      deferred.reject( "unzipparser error: " + err + "\n for: "+ source + "\n to: "+ target);
     });
     unzipParser.on('close', function() {
       deferred.resolve();
@@ -71,10 +71,10 @@ function create_unzip_step_func( mainWindow, index, steps, step ) {
     var readStream = fs.createReadStream( source );
     var writeStream = fstream.Writer( target );
     readStream.on('error', function(err) {
-      deferred.reject( "error " + err + "\n for: "+ source + "\n to: "+ target);
+      deferred.reject( "readstream error: " + err + "\n for: "+ source + "\n to: "+ target);
     });
     writeStream.on('error', function(err) {
-      deferred.reject( "error " + err + "\n for: "+ source + "\n to: "+ target);
+      deferred.reject( "writestream error: " + err + "\n for: "+ source + "\n to: "+ target);
     });
     readStream
       .pipe(unzipParser)

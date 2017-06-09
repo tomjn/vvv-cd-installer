@@ -137,6 +137,7 @@ function createWindow () {
         }*/
       } else { 
         console.log( 'Test file already exists' );
+        mainWindow.webContents.send( 'log', 'test file already exists' );
       }
     }
   }
@@ -146,6 +147,8 @@ function createWindow () {
     mainWindow.webContents.send( 'app-status', "success");
   }).fail( function(errorObject) {
     console.log( errorObject );
+    var message =  "approot: " + app_path;
+    mainWindow.webContents.send( 'log', errorObject );
     mainWindow.webContents.send( 'app-status', "problem");
     mainWindow.webContents.send( 'progress-error', "Error! " + errorObject.string);
   }).done();

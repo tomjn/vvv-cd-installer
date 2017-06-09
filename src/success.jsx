@@ -14,6 +14,11 @@ class Success extends React.Component {
 				<p>Yay! All done</p>
 				<p><a href="http://vvv.dev" target="_blank" className="button">Visit the VVV dashboard</a></p>
 				<p><a href="https://varyingvagrantvagrants.org/docs/en-US/" target="_blank" >VVV documentation</a></p>
+				<p>We&#39;ve started up the local environment for you, but in future, open a terminal/command prompt and do this:</p>
+				<pre>
+				cd vagrant-local
+				vagrant up --provision
+				</pre>
 			</div>
 		);
 	}

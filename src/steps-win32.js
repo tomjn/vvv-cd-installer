@@ -23,16 +23,16 @@ var steps = [
     "exec": "vagrant plugin install vagrant-triggers"
   },
   {
-    "label": "Adding VVV Box",
-    "type": "exec",
-    "exec": "vagrant box add ubuntu/trusty64 ..\\vvv.box"
-  },
-  {
     "label": "Extracting VVV archive",
     "type": "unzip",
     "test": "vvv-config.yml",
     "source": "..\\vvv.zip",
     "target": install_path
+  },
+  {
+    "label": "Adding VVV Box",
+    "type": "exec",
+    "exec": "vagrant box list | findstr "ubuntu/trusty64" 1>nul || vagrant add box ubuntu/trusty64 ..\\vvv.box"
   },
   {
     "label": "Starting VVV for the first time",

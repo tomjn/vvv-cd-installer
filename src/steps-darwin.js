@@ -24,17 +24,17 @@ var steps = [
   {
     "label": "Installing Vagrant Hosts Updater Plugin",
     "type": "exec",
-    "exec": "/usr/local/bin/vagrant plugin install vagrant-hostsupdater"
+    "exec": "/usr/local/bin/vagrant plugin list | grep -q hostsupdater || /usr/local/bin/vagrant plugin install vagrant-hostsupdater"
   },
   {
     "label": "Installing Vagrant Triggers Plugin",
     "type": "exec",
-    "exec": "/usr/local/bin/vagrant plugin install vagrant-triggers"
+    "exec": "/usr/local/bin/vagrant plugin list | grep -q triggers || /usr/local/bin/vagrant plugin install vagrant-triggers"
   },
   {
     "label": "Adding VVV Box",
     "type": "exec",
-    "exec": "if [[ ! `/usr/local/bin/vagrant box list | grep -q ubuntu/trusty64` ]]; then /usr/local/bin/vagrant box add ubuntu/trusty64 $NODECWDvvv.box; fi"
+    "exec": "if ! /usr/local/bin/vagrant box list | grep -q ubuntu/trusty64; then /usr/local/bin/vagrant box add ubuntu/trusty64 $NODECWDvvv.box; fi"
   },
   {
     "label": "Extracting VVV archive",

@@ -25,14 +25,14 @@ var steps = [
   {
     "label": "Extracting VVV archive",
     "type": "unzip",
-    "test": "vvv-config.yml",
+    "test": install_path + "vvv-config.yml",
     "source": "..\\vvv.zip",
     "target": install_path
   },
   {
     "label": "Adding VVV Box",
     "type": "exec",
-    "exec": "vagrant box list | findstr "ubuntu/trusty64" 1>nul || vagrant add box ubuntu/trusty64 ..\\vvv.box"
+    "exec": "vagrant box list | findstr \"ubuntu/trusty64\" 1>nul || vagrant add box ubuntu/trusty64 ..\\vvv.box"
   },
   {
     "label": "Starting VVV for the first time",

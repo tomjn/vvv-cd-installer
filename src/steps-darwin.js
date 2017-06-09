@@ -46,7 +46,7 @@ var steps = [
   {
     "label": "Starting VVV for the first time",
     "type": "exec",
-    "exec": "/usr/local/bin/vagrant up --provider virtualbox"
+    "exec": "cd '" + install_path+"' && /usr/local/bin/vagrant up --provider virtualbox"
   }
 ];
 

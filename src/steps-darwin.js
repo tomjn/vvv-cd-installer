@@ -44,7 +44,7 @@ var steps = [
   {
     "label": "Extracting VVV archive",
     "type": "unzip",
-    "test": install_path +"vvv-config.yml",
+    "test": install_path +"/vvv-config.yml",
     "source": "$NODECWDvvv.zip",
     "target": install_path
   },

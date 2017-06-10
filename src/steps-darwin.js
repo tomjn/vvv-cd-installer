@@ -47,12 +47,12 @@ var steps = [
     "test": install_path +"/vvv-config.yml",
     "source": "$NODECWDvvv.zip",
     "target": install_path
-  },
+  }/*,
   {
     "label": "Starting VVV for the first time",
     "type": "exec",
     "exec": "cd '" + install_path+"' && /usr/local/bin/vagrant up --provider virtualbox"
-  }
+  }*/
 ];
 
 module.exports = steps;

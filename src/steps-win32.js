@@ -5,7 +5,7 @@ var steps = [
   {
     "label": "Creating VVV target folder",
     "type": "exec",
-    "exec": "New-Item -ItemType Directory -Force -Path " + install_path
+    "exec": "mkdir " + install_path
   },
   {
     "label": "Installing VirtualBox",

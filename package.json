@@ -21,7 +21,7 @@
     "babel-preset-env": "^1.5.2",
     "babel-preset-react": "^6.24.1",
     "devtron": "^1.4.0",
-    "electron": "~1.6.2"
+    "electron": "1.8.2-beta5"
   },
   "dependencies": {
     "promised-exec": "^1.0.1",
